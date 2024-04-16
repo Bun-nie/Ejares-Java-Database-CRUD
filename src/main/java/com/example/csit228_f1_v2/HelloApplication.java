@@ -102,15 +102,41 @@ public class HelloApplication extends Application {
         btnLogin.setFont(Font.font(40));
         grid.add(btnLogin, 0, 3, 2, 1);
 
+        Button btnRegister = new Button("Register");
+        btnRegister.setFont(Font.font(40));
+        grid.add(btnRegister, 0, 4, 2, 1);
+
+        Text txtError = new Text();
+
+
+        btnRegister.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                HelloController hc = new HelloController();
+                System.out.println("Hello");
+                String name = tfUsername.getText();
+                String pass = pfPassword.getText();
+                hc.InsertData(name, pass);
+                    /*Parent p = FXMLLoader.load(getClass().getResource("login-view.fxml"));
+                    Scene s = new Scene(p);
+                    stage.setScene(s);
+                    stage.show();*/
+            }
+        });
         btnLogin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                HelloController hc = new HelloController();
                 System.out.println("Hello");
                 try {
-                    Parent p = FXMLLoader.load(getClass().getResource("homepage.fxml"));
-                    Scene s = new Scene(p);
-                    stage.setScene(s);
-                    stage.show();
+                    String name = tfUsername.getText();
+                    String pass = pfPassword.getText();
+                    if(hc.ReadData(name,pass)){
+                        Parent p = FXMLLoader.load(getClass().getResource("homepage.fxml"));
+                        Scene s = new Scene(p);
+                        stage.setScene(s);
+                        stage.show();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
